@@ -1,3 +1,4 @@
 [submodule "src/main/java/frc/robot/Subsystems/Gyro"]
 	path = src/main/java/frc/robot/Subsystems/Gyro
 	url = https://github.com/Turbojax07/1086Gyro
+	branch = main
