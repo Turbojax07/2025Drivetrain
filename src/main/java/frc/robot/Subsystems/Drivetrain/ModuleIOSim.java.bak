@@ -1,0 +1,152 @@
+package frc.robot.Subsystems.Drivetrain;
+
+import static edu.wpi.first.units.Units.*;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Temperature;
+import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import frc.robot.Constants.DriveConstants;
+import org.littletonrobotics.junction.Logger;
+
+public class ModuleIOSim implements ModuleIO {
+    private int moduleId;
+
+    private DCMotorSim driveMotor;
+    private DCMotorSim steerMotor;
+
+    private PIDController driveController;
+    private PIDController steerController;
+
+    private ModuleIOInputsAutoLogged inputs;
+
+    public ModuleIOSim(int moduleId) {
+        this.moduleId = moduleId;
+
+        driveMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), DriveConstants.driveMOI, DriveConstants.driveGearRatio), DCMotor.getKrakenX60(1));
+        steerMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), DriveConstants.steerMOI, DriveConstants.steerGearRatio), DCMotor.getKrakenX60(1));
+
+        driveController = new PIDController(DriveConstants.kPDrive, DriveConstants.kIDrive, DriveConstants.kDDrive);
+        steerController = new PIDController(DriveConstants.kPSteer, DriveConstants.kISteer, DriveConstants.kDSteer);
+
+        inputs = new ModuleIOInputsAutoLogged();
+    }
+
+    @Override
+    public void updateInputs() {
+        driveMotor.update(0.02);
+        steerMotor.update(0.02);
+
+        inputs.modulePosition = getPosition();
+        inputs.moduleState = getState();
+        
+        inputs.steerAngle = getAngle();
+        inputs.driveDistance = getDistance();
+        inputs.driveSpeed = getDriveVelocity();
+        inputs.driveAcceleration = getDriveAcceleration();
+        
+        inputs.driveVoltage = getDriveVoltage();
+        inputs.steerVoltage = getSteerVoltage();
+        
+        inputs.driveCurrent = getDriveCurrent();
+        inputs.steerCurrent = getSteerCurrent();
+
+        inputs.driveTemperature = getDriveTemperature();
+        inputs.steerTemperature = getSteerTemperature();
+
+        Logger.processInputs(String.format("Module%d_Sim", moduleId), inputs);
+    }
+
+    @Override
+    public void setState(SwerveModuleState state) {
+        double driveVolts = driveController.calculate(getDriveVelocity().in(MetersPerSecond), state.speedMetersPerSecond);
+        double steerVolts = steerController.calculate(getAngle().getRotations(), state.angle.getRotations());
+
+        Logger.recordOutput("Desired Drive Volts", driveVolts);
+        Logger.recordOutput("Desired Steer Volts", steerVolts);
+
+        driveMotor.setInputVoltage(MathUtil.clamp(driveVolts, -12, 12));
+        steerMotor.setInputVoltage(MathUtil.clamp(steerVolts, -12, 12));
+    }
+
+    @Override
+    public void resetPosition(SwerveModulePosition position) {
+        driveMotor.setAngle(position.distanceMeters / DriveConstants.metersPerRotation);
+        steerMotor.setAngle(position.angle.getRadians());
+    }
+
+    @Override
+    public SwerveModuleState getState() {
+        return new SwerveModuleState(getDriveVelocity(), getAbsoluteAngle());
+    }
+
+    @Override
+    public SwerveModulePosition getPosition() {
+        return new SwerveModulePosition(getDistance(), getAbsoluteAngle());
+    }
+
+    @Override
+    public Rotation2d getAngle() {
+        return new Rotation2d(steerMotor.getAngularPosition());
+    }
+    
+    @Override
+    public Rotation2d getAbsoluteAngle() {
+        return new Rotation2d(steerMotor.getAngularPosition());
+    }
+
+    @Override
+    public Distance getDistance() {
+        return Meters.of(driveMotor.getAngularPositionRotations() * DriveConstants.metersPerRotation);
+    }
+
+    @Override
+    public LinearVelocity getDriveVelocity() {
+        return Meters.per(Minute).of(driveMotor.getAngularVelocityRPM() * DriveConstants.metersPerRotation);
+    }
+
+    @Override
+    public LinearAcceleration getDriveAcceleration() {
+        return MetersPerSecondPerSecond.of(driveMotor.getAngularAccelerationRadPerSecSq() / 2 / Math.PI * DriveConstants.metersPerRotation);
+    }
+
+    @Override
+    public Voltage getDriveVoltage() {
+        return Volts.of(driveMotor.getInputVoltage());
+    }
+
+    @Override
+    public Voltage getSteerVoltage() {
+        return Volts.of(steerMotor.getInputVoltage());
+    }
+
+    @Override
+    public Current getDriveCurrent() {
+        return Amps.of(driveMotor.getCurrentDrawAmps());
+    }
+
+    @Override
+    public Current getSteerCurrent() {
+        return Amps.of(steerMotor.getCurrentDrawAmps());
+    }
+
+    @Override
+    public Temperature getDriveTemperature() {
+        return Celsius.zero();
+    }
+
+    @Override
+    public Temperature getSteerTemperature() {
+        return Celsius.zero();
+    }
+}
