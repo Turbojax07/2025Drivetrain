@@ -9,6 +9,7 @@ import frc.robot.Subsystems.Drivetrain.ModuleIOSim;
 import frc.robot.Subsystems.Drivetrain.ModuleIOTalonFX;
 import frc.robot.Subsystems.Drivetrain.Commands.SwerveDrive;
 import frc.robot.Subsystems.Gyro.Gyro;
+import frc.robot.Subsystems.Gyro.GyroIOBNO085;
 import frc.robot.Subsystems.Gyro.GyroIOPigeon2;
 
 public class RobotContainer {
@@ -16,10 +17,11 @@ public class RobotContainer {
 
     public RobotContainer() {
         if (RobotBase.isReal()) {
-            new Gyro(new GyroIOPigeon2());
-            new Drivetrain(new ModuleIOTalonFX(0), new ModuleIOTalonFX(1), new ModuleIOTalonFX(2), new ModuleIOTalonFX(3));
+            // new Gyro(new GyroIOPigeon2());
+            new Gyro(new GyroIOBNO085());
+            // new Drivetrain(new ModuleIOTalonFX(0), new ModuleIOTalonFX(1), new ModuleIOTalonFX(2), new ModuleIOTalonFX(3));
         } else {
-            new Drivetrain(new ModuleIOSim(0), new ModuleIOSim(1), new ModuleIOSim(2), new ModuleIOSim(3));
+            // new Drivetrain(new ModuleIOSim(0), new ModuleIOSim(1), new ModuleIOSim(2), new ModuleIOSim(3));
         }
 
         configureBindings();
@@ -34,6 +36,7 @@ public class RobotContainer {
     }
 
     public Command getTeleopCommand() {
-        return new SwerveDrive(controller::getLeftX, controller::getLeftY, controller::getRightX);
+        return Commands.print("No teleop mode configured");
+        // return new SwerveDrive(controller::getLeftX, controller::getLeftY, controller::getRightX);
     }
 }
