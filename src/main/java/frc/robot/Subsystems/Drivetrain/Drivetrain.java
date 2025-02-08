@@ -137,8 +137,12 @@ public class Drivetrain extends SubsystemBase {
             modules[i].updateInputs();
         }
 
+        poseEstimator.update(getHeading(), positions);
+
         Logger.recordOutput("Drivetrain/ActualStates", states);
         Logger.recordOutput("Drivetrain/ActualPositions", positions);
+
+        Logger.recordOutput("Drivetrain/EstimatedPose", poseEstimator.getEstimatedPosition());
     }
 
     public Pose2d getPose() {
@@ -160,13 +164,18 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void drive(ChassisSpeeds speeds) {
+        speeds = ChassisSpeeds.discretize(speeds, 0.02);
         SwerveModuleState[] desiredStates = kinematics.toSwerveModuleStates(speeds);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.maxLinearVelocity);
 
         for (int i = 0; i < modules.length; i++) {
             desiredStates[i].optimize(modules[i].getAngle());
+            desiredStates[i].cosineScale(modules[i].getAngle());
+
             modules[i].setState(desiredStates[i]);
         }
 
         Logger.recordOutput("Drivetrain/DesiredStates", desiredStates);
+        Logger.recordOutput("Drivetrain/DesiredSpeeds", speeds);
     }
 }
