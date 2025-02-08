@@ -46,6 +46,12 @@ public class ModuleIOSim implements ModuleIO {
 
     @Override
     public void updateInputs() {
+        double driveVolts = MathUtil.clamp(driveController.calculate(driveMotor.getAngularVelocityRadPerSec() * DriveConstants.wheelRadius.in(Meters)) + driveMotor.getInputVoltage(), -12, 12);
+        double steerVolts = MathUtil.clamp(steerController.calculate(getAngle().getRadians()), -12, 12);
+
+        driveMotor.setInputVoltage(driveVolts);
+        steerMotor.setInputVoltage(steerVolts);
+
         driveMotor.update(0.02);
         steerMotor.update(0.02);
 
@@ -76,19 +82,13 @@ public class ModuleIOSim implements ModuleIO {
 
     @Override
     public void setState(SwerveModuleState state) {
-        double driveVolts = driveController.calculate(getDriveVelocity().in(MetersPerSecond), state.speedMetersPerSecond);
-        double steerVolts = steerController.calculate(getAngle().getRotations(), state.angle.getRotations());
-
-        Logger.recordOutput("Desired Drive Volts", driveVolts);
-        Logger.recordOutput("Desired Steer Volts", steerVolts);
-
-        driveMotor.setInputVoltage(MathUtil.clamp(driveVolts, -12, 12));
-        steerMotor.setInputVoltage(MathUtil.clamp(steerVolts, -12, 12));
+        driveController.setSetpoint(state.speedMetersPerSecond);
+        steerController.setSetpoint(state.angle.getRadians());
     }
 
     @Override
     public void resetPosition(SwerveModulePosition position) {
-        driveMotor.setAngle(position.distanceMeters / DriveConstants.metersPerRotation);
+        driveMotor.setAngle(position.distanceMeters / DriveConstants.wheelRadius.in(Meters));
         steerMotor.setAngle(position.angle.getRadians());
     }
 
@@ -124,17 +124,17 @@ public class ModuleIOSim implements ModuleIO {
 
     @Override
     public Distance getDistance() {
-        return Meters.of(driveMotor.getAngularPositionRotations() * DriveConstants.metersPerRotation);
+        return Meters.of(driveMotor.getAngularPositionRad() * DriveConstants.wheelRadius.in(Meters));
     }
 
     @Override
     public LinearVelocity getDriveVelocity() {
-        return Meters.per(Minute).of(driveMotor.getAngularVelocityRPM() * DriveConstants.metersPerRotation);
+        return MetersPerSecond.of(driveMotor.getAngularVelocityRadPerSec() * DriveConstants.wheelRadius.in(Meters));
     }
 
     @Override
     public LinearAcceleration getDriveAcceleration() {
-        return MetersPerSecondPerSecond.of(driveMotor.getAngularAccelerationRadPerSecSq() / 2 / Math.PI * DriveConstants.metersPerRotation);
+        return MetersPerSecondPerSecond.of(driveMotor.getAngularAccelerationRadPerSecSq() * DriveConstants.wheelRadius.in(Meters));
     }
 
     @Override

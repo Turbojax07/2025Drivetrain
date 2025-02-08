@@ -50,7 +50,7 @@ public class Constants {
         public static final Current driveCurrentLimit = Amps.of(60);
         public static final Current steerCurrentLimit = Amps.of(30);
 
-        public static final double kPDrive = 0.05;
+        public static final double kPDrive = 0.05 / wheelRadius.in(Meters);
         public static final double kIDrive = 0;
         public static final double kDDrive = 0;
         // TODO Find using SysID
