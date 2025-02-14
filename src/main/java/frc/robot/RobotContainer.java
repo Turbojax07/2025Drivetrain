@@ -2,7 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.Drivetrain.Drivetrain;
 import frc.robot.Subsystems.Drivetrain.ModuleIOSim;
@@ -25,9 +24,7 @@ public class RobotContainer {
         configureBindings();
     }
 
-    private void configureBindings() {
-
-    }
+    private void configureBindings() {}
 
     public Command getAutonomousCommand() {
         return null;
