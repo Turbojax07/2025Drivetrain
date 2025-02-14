@@ -18,6 +18,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -83,8 +84,14 @@ public class Drivetrain extends SubsystemBase {
         // Configuring Pathplanner
         AutoBuilder.configure(this::getPose, this::resetPose, this::getSpeeds, this::drive,
             new PPHolonomicDriveController(
-                new PIDConstants(DriveConstants.kPDrive, DriveConstants.kIDrive, DriveConstants.kDDrive),
-                new PIDConstants(DriveConstants.kPSteer, DriveConstants.kISteer, DriveConstants.kDSteer)
+                new PIDConstants(
+                    RobotBase.isReal() ? DriveConstants.kPDriveReal : DriveConstants.kPDriveSim,
+                    RobotBase.isReal() ? DriveConstants.kIDriveReal : DriveConstants.kIDriveSim,
+                    RobotBase.isReal() ? DriveConstants.kDDriveReal : DriveConstants.kDDriveSim),
+                new PIDConstants(
+                    RobotBase.isReal() ? DriveConstants.kPSteerReal : DriveConstants.kPSteerSim,
+                    RobotBase.isReal() ? DriveConstants.kISteerReal : DriveConstants.kISteerSim,
+                    RobotBase.isReal() ? DriveConstants.kDSteerReal : DriveConstants.kDSteerSim)
             ),
             new RobotConfig(
                 DriveConstants.robotMass, DriveConstants.robotMOI,

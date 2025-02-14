@@ -50,24 +50,34 @@ public class Constants {
         public static final Current driveCurrentLimit = Amps.of(60);
         public static final Current steerCurrentLimit = Amps.of(30);
 
-        public static final double kPDrive = 0.05 / wheelRadius.in(Meters);
-        public static final double kIDrive = 0;
-        public static final double kDDrive = 0;
+        public static final double kPDriveReal = 0.05 / wheelRadius.in(Meters);
+        public static final double kIDriveReal = 0;
+        public static final double kDDriveReal = 0;
+
+        public static final double kPSteerReal = 8;
+        public static final double kISteerReal = 0;
+        public static final double kDSteerReal = 0;
+
+        public static final double kPDriveSim = 0.05 / wheelRadius.in(Meters);
+        public static final double kIDriveSim = 0;
+        public static final double kDDriveSim = 0;
+
+        public static final double kPSteerSim = 8;
+        public static final double kISteerSim = 0;
+        public static final double kDSteerSim = 0;
+
         // TODO Find using SysID
         // public static final double kVDrive = 0;
         // public static final double kADrive = 0;
 
-        public static final double kPSteer = 8;
-        public static final double kISteer = 0;
-        public static final double kDSteer = 0;
-
-        public static final double driveGearRatio = 8.14;
-        public static final double steerGearRatio = 150.0 / 7.0;
+        public static final double driveGearRatio = 5.14;
+        public static final double steerGearRatio = 12.8;
 
         public static final double driveMOI = 0.025;
         public static final double steerMOI = 0.004;
 
-        public static final double metersPerRotation = 2 * Math.PI * wheelRadius.in(Meters) / driveGearRatio;
+
+        public static final double metersPerRotation = wheelRadius.in(Meters) / driveGearRatio;
 
         public static final Translation2d flModuleOffset = new Translation2d(robotWidth.div( 2), robotLength.div( 2));
         public static final Translation2d frModuleOffset = new Translation2d(robotWidth.div( 2), robotLength.div(-2));
@@ -78,6 +88,9 @@ public class Constants {
         public static final double frEncoderOffset = 0;
         public static final double blEncoderOffset = 0;
         public static final double brEncoderOffset = 0;
+
+        // Arrays for easy configuration access
+        public static final Translation2d[] translations = { flModuleOffset, frModuleOffset, blModuleOffset, brModuleOffset };
 
         public static final double[][] moduleConfigs = {
             {RobotMap.DT_FLDrive, RobotMap.DT_FLSteer, RobotMap.DT_FLEncoder, DriveConstants.flEncoderOffset}, // FL: drive id, steer id, encoder id, encoder offset

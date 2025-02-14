@@ -53,9 +53,9 @@ public class ModuleIOSparkMax implements ModuleIO {
         steerMotor = new SparkMax((int) DriveConstants.moduleConfigs[moduleId][1], MotorType.kBrushless);
 
         SparkMaxConfig driveConfig = new SparkMaxConfig();
-        driveConfig.closedLoop.p(DriveConstants.kPDrive, ClosedLoopSlot.kSlot0);
-        driveConfig.closedLoop.i(DriveConstants.kIDrive, ClosedLoopSlot.kSlot0);
-        driveConfig.closedLoop.d(DriveConstants.kDDrive, ClosedLoopSlot.kSlot0);
+        driveConfig.closedLoop.p(DriveConstants.kPDriveReal, ClosedLoopSlot.kSlot0);
+        driveConfig.closedLoop.i(DriveConstants.kIDriveReal, ClosedLoopSlot.kSlot0);
+        driveConfig.closedLoop.d(DriveConstants.kDDriveReal, ClosedLoopSlot.kSlot0);
         driveConfig.encoder.positionConversionFactor(DriveConstants.metersPerRotation);
         driveConfig.encoder.velocityConversionFactor(DriveConstants.metersPerRotation / 60);
         driveConfig.inverted(false);
@@ -63,9 +63,9 @@ public class ModuleIOSparkMax implements ModuleIO {
         driveConfig.smartCurrentLimit((int) DriveConstants.driveCurrentLimit.in(Amps));
 
         SparkMaxConfig steerConfig = new SparkMaxConfig();
-        steerConfig.closedLoop.p(DriveConstants.kPSteer, ClosedLoopSlot.kSlot0);
-        steerConfig.closedLoop.i(DriveConstants.kISteer, ClosedLoopSlot.kSlot0);
-        steerConfig.closedLoop.d(DriveConstants.kDSteer, ClosedLoopSlot.kSlot0);
+        steerConfig.closedLoop.p(DriveConstants.kPSteerReal, ClosedLoopSlot.kSlot0);
+        steerConfig.closedLoop.i(DriveConstants.kISteerReal, ClosedLoopSlot.kSlot0);
+        steerConfig.closedLoop.d(DriveConstants.kDSteerReal, ClosedLoopSlot.kSlot0);
         steerConfig.encoder.positionConversionFactor(1.0 / DriveConstants.steerGearRatio);
         steerConfig.encoder.velocityConversionFactor(1.0 / DriveConstants.steerGearRatio);
         steerConfig.inverted(false);

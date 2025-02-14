@@ -50,9 +50,9 @@ public class ModuleIOTalonFX implements ModuleIO {
         driveConfig.Feedback.FeedbackRotorOffset = encoderOffset;
         driveConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         driveConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-        driveConfig.Slot0.kP = DriveConstants.kPDrive;
-        driveConfig.Slot0.kI = DriveConstants.kIDrive;
-        driveConfig.Slot0.kD = DriveConstants.kDDrive;
+        driveConfig.Slot0.kP = DriveConstants.kPDriveReal;
+        driveConfig.Slot0.kI = DriveConstants.kIDriveReal;
+        driveConfig.Slot0.kD = DriveConstants.kDDriveReal;
 
         TalonFXConfiguration steerConfig = new TalonFXConfiguration();
         
@@ -61,9 +61,9 @@ public class ModuleIOTalonFX implements ModuleIO {
         steerConfig.Feedback.FeedbackRotorOffset = encoderOffset;
         steerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         steerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-        steerConfig.Slot0.kP = DriveConstants.kPSteer;
-        steerConfig.Slot0.kI = DriveConstants.kISteer;
-        steerConfig.Slot0.kD = DriveConstants.kDSteer;
+        steerConfig.Slot0.kP = DriveConstants.kPSteerReal;
+        steerConfig.Slot0.kI = DriveConstants.kISteerReal;
+        steerConfig.Slot0.kD = DriveConstants.kDSteerReal;
 
         driveMotor.getConfigurator().apply(driveConfig);
         steerMotor.getConfigurator().apply(steerConfig);

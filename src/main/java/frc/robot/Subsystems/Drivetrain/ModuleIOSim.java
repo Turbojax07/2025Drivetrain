@@ -38,8 +38,8 @@ public class ModuleIOSim implements ModuleIO {
         driveMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), DriveConstants.driveMOI, DriveConstants.driveGearRatio), DCMotor.getKrakenX60(1));
         steerMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), DriveConstants.steerMOI, DriveConstants.steerGearRatio), DCMotor.getKrakenX60(1));
 
-        driveController = new PIDController(DriveConstants.kPDrive, DriveConstants.kIDrive, DriveConstants.kDDrive);
-        steerController = new PIDController(DriveConstants.kPSteer, DriveConstants.kISteer, DriveConstants.kDSteer);
+        driveController = new PIDController(DriveConstants.kPDriveSim, DriveConstants.kIDriveSim, DriveConstants.kDDriveSim);
+        steerController = new PIDController(DriveConstants.kPSteerSim, DriveConstants.kISteerSim, DriveConstants.kDSteerSim);
 
         inputs = new ModuleIOInputsAutoLogged();
     }
