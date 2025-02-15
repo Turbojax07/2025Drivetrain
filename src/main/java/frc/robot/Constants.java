@@ -58,7 +58,7 @@ public class Constants {
         public static final double kISteerReal = 0;
         public static final double kDSteerReal = 0;
 
-        public static final double kPDriveSim = 0.05 / wheelRadius.in(Meters);
+        public static final double kPDriveSim = 0.05;
         public static final double kIDriveSim = 0;
         public static final double kDDriveSim = 0;
 
