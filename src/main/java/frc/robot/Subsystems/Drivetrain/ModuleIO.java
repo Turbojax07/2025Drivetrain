@@ -1,5 +1,7 @@
 package frc.robot.Subsystems.Drivetrain;
 
+import static edu.wpi.first.units.Units.*;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -16,27 +18,27 @@ import org.littletonrobotics.junction.AutoLog;
 public interface ModuleIO {
     @AutoLog
     public class ModuleIOInputs {
-        SwerveModulePosition modulePosition;
-        SwerveModuleState moduleState;
+        SwerveModulePosition modulePosition = new SwerveModulePosition();
+        SwerveModuleState moduleState = new SwerveModuleState();
 
-        Rotation2d steerAbsAngle;
+        Rotation2d steerAbsAngle = new Rotation2d();
 
-        Rotation2d steerAngle;
-        AngularVelocity steerVelocity;
-        AngularAcceleration steerAcceleration;
+        Rotation2d steerAngle = new Rotation2d();
+        AngularVelocity steerVelocity = RotationsPerSecond.zero();
+        AngularAcceleration steerAcceleration = RotationsPerSecondPerSecond.zero();
 
-        Distance driveDistance;
-        LinearVelocity driveVelocity;
-        LinearAcceleration driveAcceleration;
+        Distance driveDistance = Meters.zero();
+        LinearVelocity driveVelocity = MetersPerSecond.zero();
+        LinearAcceleration driveAcceleration = MetersPerSecondPerSecond.zero();
 
-        Voltage driveVoltage;
-        Voltage steerVoltage;
+        Voltage driveVoltage = Volts.zero();
+        Voltage steerVoltage = Volts.zero();
         
-        Current driveCurrent;
-        Current steerCurrent;
+        Current driveCurrent = Amps.zero();
+        Current steerCurrent = Amps.zero();
 
-        Temperature driveTemperature;
-        Temperature steerTemperature;
+        Temperature driveTemperature = Celsius.zero();
+        Temperature steerTemperature = Celsius.zero();
     }
 
     public void updateInputs();
