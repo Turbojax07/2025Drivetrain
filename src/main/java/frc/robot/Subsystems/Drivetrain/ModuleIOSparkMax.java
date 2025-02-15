@@ -82,6 +82,8 @@ public class ModuleIOSparkMax implements ModuleIO {
 
         driveController = driveMotor.getClosedLoopController();
         steerController = steerMotor.getClosedLoopController();
+
+        inputs = new ModuleIOInputsAutoLogged();
     }
 
     @Override
@@ -150,7 +152,7 @@ public class ModuleIOSparkMax implements ModuleIO {
 
     @Override
     public AngularAcceleration getSteerAcceleration() {
-        return RotationsPerSecondPerSecond.of(steerEncoder.getVelocity() * 60 / 0.02);
+        return getSteerVelocity().div(Seconds.of(0.02));
     }
 
     @Override
@@ -165,8 +167,7 @@ public class ModuleIOSparkMax implements ModuleIO {
 
     @Override
     public LinearAcceleration getDriveAcceleration() {
-        // TODO Figure out how to get SparkMax acceleration.
-        throw new UnsupportedOperationException("Unimplemented method 'getDriveAcceleration'");
+        return getDriveVelocity().div(Seconds.of(0.02));
     }
 
     @Override
