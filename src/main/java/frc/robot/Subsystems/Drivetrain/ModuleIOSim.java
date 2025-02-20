@@ -40,6 +40,8 @@ public class ModuleIOSim implements ModuleIO {
 
         driveController = new PIDController(DriveConstants.kPDriveSim, DriveConstants.kIDriveSim, DriveConstants.kDDriveSim);
         steerController = new PIDController(DriveConstants.kPSteerSim, DriveConstants.kISteerSim, DriveConstants.kDSteerSim);
+        
+        steerController.enableContinuousInput(0, Math.PI * 2);
 
         inputs = new ModuleIOInputsAutoLogged();
     }

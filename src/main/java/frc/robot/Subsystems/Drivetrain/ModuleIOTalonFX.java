@@ -64,6 +64,7 @@ public class ModuleIOTalonFX implements ModuleIO {
         steerConfig.Slot0.kP = DriveConstants.kPSteerReal;
         steerConfig.Slot0.kI = DriveConstants.kISteerReal;
         steerConfig.Slot0.kD = DriveConstants.kDSteerReal;
+        steerConfig.ClosedLoopGeneral.ContinuousWrap = true;
 
         driveMotor.getConfigurator().apply(driveConfig);
         steerMotor.getConfigurator().apply(steerConfig);
