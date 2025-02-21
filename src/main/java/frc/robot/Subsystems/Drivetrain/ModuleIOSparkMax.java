@@ -90,6 +90,8 @@ public class ModuleIOSparkMax implements ModuleIO {
 
     @Override
     public void updateInputs() {
+        steerEncoder.setPosition(getAbsoluteAngle().getRotations());
+        
         inputs.modulePosition = getPosition();
         inputs.moduleState = getState();
         
