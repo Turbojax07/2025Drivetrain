@@ -24,13 +24,13 @@ public class Constants {
         public static final int DT_BLSteer = 6; // CAN
         public static final int DT_BRDrive = 7; // CAN
         public static final int DT_BRSteer = 8; // CAN
+        
+        public static final int DT_FLEncoder = 11; // CAN
+        public static final int DT_FREncoder = 12; // CAN
+        public static final int DT_BLEncoder = 13; // CAN
+        public static final int DT_BREncoder = 14; // CAN
 
-        public static final int GYRO_Pigeon2Id = 9; // CAN
-
-        public static final int DT_FLEncoder = 0; // Analog Pins
-        public static final int DT_FREncoder = 1; // Analog Pins
-        public static final int DT_BLEncoder = 2; // Analog Pins
-        public static final int DT_BREncoder = 3; // Analog Pins
+        public static final int GYRO_Pigeon2Id = 15; // CAN
     }
 
     public class DriveConstants {

@@ -2,6 +2,7 @@ package frc.robot.Subsystems.Drivetrain;
 
 import static edu.wpi.first.units.Units.*;
 
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -23,7 +24,6 @@ import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj.AnalogEncoder;
 import frc.robot.Constants.DriveConstants;
 import org.littletonrobotics.junction.Logger;
 
@@ -38,7 +38,7 @@ public class ModuleIOSparkMax implements ModuleIO {
     private RelativeEncoder steerEncoder;
     private SparkClosedLoopController steerController;
 
-    private AnalogEncoder absEncoder;
+    private CANcoder absEncoder;
     private double encoderOffset;
 
     private ModuleIOInputsAutoLogged inputs;
@@ -46,7 +46,7 @@ public class ModuleIOSparkMax implements ModuleIO {
     public ModuleIOSparkMax(int moduleId) {
         this.moduleId = moduleId;
 
-        absEncoder = new AnalogEncoder((int) DriveConstants.moduleConfigs[moduleId][2]);
+        absEncoder = new CANcoder((int) DriveConstants.moduleConfigs[moduleId][2]);
         encoderOffset = DriveConstants.moduleConfigs[moduleId][3];
 
         driveMotor = new SparkMax((int) DriveConstants.moduleConfigs[moduleId][0], MotorType.kBrushless);
@@ -139,7 +139,7 @@ public class ModuleIOSparkMax implements ModuleIO {
 
     @Override
     public Rotation2d getAbsoluteAngle() {
-        return Rotation2d.fromRotations(absEncoder.get()).minus(new Rotation2d(encoderOffset));
+        return new Rotation2d(absEncoder.getAbsolutePosition().getValue()).minus(new Rotation2d(encoderOffset));
     }
 
     @Override
