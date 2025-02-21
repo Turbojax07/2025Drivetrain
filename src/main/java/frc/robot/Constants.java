@@ -50,7 +50,7 @@ public class Constants {
         public static final Current driveCurrentLimit = Amps.of(60);
         public static final Current steerCurrentLimit = Amps.of(30);
 
-        public static final double kPDriveReal = 0.05 / wheelRadius.in(Meters);
+        public static final double kPDriveReal = 0.05;
         public static final double kIDriveReal = 0;
         public static final double kDDriveReal = 0;
 
@@ -84,10 +84,10 @@ public class Constants {
         public static final Translation2d blModuleOffset = new Translation2d(robotWidth.div(-2), robotLength.div( 2));
         public static final Translation2d brModuleOffset = new Translation2d(robotWidth.div(-2), robotLength.div(-2));
 
-        public static final double flEncoderOffset = 0;
-        public static final double frEncoderOffset = 0;
-        public static final double blEncoderOffset = 0;
-        public static final double brEncoderOffset = 0;
+        public static final double flEncoderOffset = 4.28; // Radians
+        public static final double frEncoderOffset = 1.97; // Radians
+        public static final double blEncoderOffset = 4.06; // Radians
+        public static final double brEncoderOffset = 6.52; // Radians
 
         // Arrays for easy configuration access
         public static final Translation2d[] translations = { flModuleOffset, frModuleOffset, blModuleOffset, brModuleOffset };

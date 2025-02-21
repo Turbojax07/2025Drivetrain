@@ -69,7 +69,7 @@ public class ModuleIOTalonFX implements ModuleIO {
         driveMotor.getConfigurator().apply(driveConfig);
         steerMotor.getConfigurator().apply(steerConfig);
 
-        steerMotor.setPosition(absEncoder.get() - encoderOffset);
+        steerMotor.setPosition(getAbsoluteAngle().getRotations());
 
         inputs = new ModuleIOInputsAutoLogged();
     }
@@ -125,7 +125,7 @@ public class ModuleIOTalonFX implements ModuleIO {
 
     @Override
     public Rotation2d getAbsoluteAngle() {
-        return Rotation2d.fromRotations(absEncoder.get() - encoderOffset);
+        return Rotation2d.fromRotations(absEncoder.get()).minus(new Rotation2d(encoderOffset));
     }
 
     @Override

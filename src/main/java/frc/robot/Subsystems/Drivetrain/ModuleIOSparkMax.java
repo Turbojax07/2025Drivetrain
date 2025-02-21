@@ -66,8 +66,8 @@ public class ModuleIOSparkMax implements ModuleIO {
         steerConfig.closedLoop.p(DriveConstants.kPSteerReal, ClosedLoopSlot.kSlot0);
         steerConfig.closedLoop.i(DriveConstants.kISteerReal, ClosedLoopSlot.kSlot0);
         steerConfig.closedLoop.d(DriveConstants.kDSteerReal, ClosedLoopSlot.kSlot0);
-        steerConfig.closedLoop.positionWrappingEnabled(true);
-        steerConfig.closedLoop.positionWrappingInputRange(0, Math.PI * 2);
+        steerConfig.closedLoop.positionWrappingEnabled(false);
+        // steerConfig.closedLoop.positionWrappingInputRange(-Math.PI, Math.PI);
         steerConfig.encoder.positionConversionFactor(1.0 / DriveConstants.steerGearRatio);
         steerConfig.encoder.velocityConversionFactor(1.0 / DriveConstants.steerGearRatio);
         steerConfig.inverted(false);
@@ -80,7 +80,7 @@ public class ModuleIOSparkMax implements ModuleIO {
         driveEncoder = driveMotor.getEncoder();
         steerEncoder = steerMotor.getEncoder();
 
-        steerEncoder.setPosition(absEncoder.get() - encoderOffset);
+        steerEncoder.setPosition(getAbsoluteAngle().getRotations());
 
         driveController = driveMotor.getClosedLoopController();
         steerController = steerMotor.getClosedLoopController();
@@ -139,7 +139,7 @@ public class ModuleIOSparkMax implements ModuleIO {
 
     @Override
     public Rotation2d getAbsoluteAngle() {
-        return Rotation2d.fromRotations(absEncoder.get() - encoderOffset);
+        return Rotation2d.fromRotations(absEncoder.get()).minus(new Rotation2d(encoderOffset));
     }
 
     @Override
