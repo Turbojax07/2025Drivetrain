@@ -34,9 +34,9 @@ public class SwerveDrive extends Command {
         double rightXSpeed = rightXSupplier.get();
 
         // Applying a deadband
-        MathUtil.applyDeadband(leftXSpeed, 0.1);
-        MathUtil.applyDeadband(leftYSpeed, 0.1);
-        MathUtil.applyDeadband(rightXSpeed, 0.1);
+        leftXSpeed = MathUtil.applyDeadband(leftXSpeed, 0.1);
+        leftYSpeed = MathUtil.applyDeadband(leftYSpeed, 0.1);
+        rightXSpeed = MathUtil.applyDeadband(rightXSpeed, 0.1);
 
         // When applying a deadband, you cannot go slower than the deadband zone.
         // This code allows the robot to move within that "lost" zone.
