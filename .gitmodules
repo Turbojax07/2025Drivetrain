@@ -1,4 +1,4 @@
-[submodule "src/main/java/frc/robot/Subsystems/Gyro"]
+[submodule "Gyro"]
 	path = src/main/java/frc/robot/subsystems/gyro
 	url = https://github.com/Turbojax07/1086Gyro
 	branch = main
