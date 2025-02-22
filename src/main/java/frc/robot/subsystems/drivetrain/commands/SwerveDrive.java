@@ -1,10 +1,10 @@
-package frc.robot.Subsystems.Drivetrain.Commands;
+package frc.robot.subsystems.drivetrain.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Subsystems.Drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.Drivetrain;
 import java.util.function.Supplier;
 
 public class SwerveDrive extends Command {

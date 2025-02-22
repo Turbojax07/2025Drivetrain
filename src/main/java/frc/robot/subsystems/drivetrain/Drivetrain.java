@@ -1,4 +1,4 @@
-package frc.robot.Subsystems.Drivetrain;
+package frc.robot.subsystems.drivetrain;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Subsystems.Gyro.Gyro;
+import frc.robot.subsystems.gyro.Gyro;
 import org.littletonrobotics.junction.Logger;
 
 public class Drivetrain extends SubsystemBase {

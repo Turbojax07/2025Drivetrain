@@ -3,9 +3,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Subsystems.Drivetrain.*;
-import frc.robot.Subsystems.Drivetrain.Commands.*;
-import frc.robot.Subsystems.Gyro.*;
+import frc.robot.subsystems.drivetrain.*;
+import frc.robot.subsystems.drivetrain.commands.*;
+import frc.robot.subsystems.gyro.*;
 
 public class RobotContainer {
     private CommandXboxController controller = new CommandXboxController(0);
